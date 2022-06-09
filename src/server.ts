@@ -29,6 +29,30 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
+  app.get("/filteredimage", async (req, res) => {
+    const image_url = req.query.image_url;
+    if (image_url) {
+      try {
+        await filterImageFromURL(image_url).then(response => {
+          res.sendFile(response);
+          res.on("OK", function() {
+            deleteLocalFiles([response]);
+          });
+        });
+      } catch (error) {
+        res.status(500).send({
+          status: "Error",
+          message: "failed to filter the image",
+          verbose: error
+        });
+      }
+    } else {
+      res.status(404).send({
+        status: "Not Found",
+        message: "Not found the parrameter `image_url`."
+      });
+    }
+  });
   //! END @TODO1
   
   // Root Endpoint
