@@ -49,7 +49,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     } else {
       res.status(404).send({
         status: "Not Found",
-        message: "Not found the parrameter `image_url`."
+        message: "Not found the image with `image_url`."
       });
     }
   });
